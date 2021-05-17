@@ -1,0 +1,36 @@
+// 백준 13164 : 행복 유치원
+#include <iostream>
+#include <vector>
+#include <queue>
+using namespace std;
+
+int main() {
+	int n, k; // 유치원에 있는 원생의 수 n, 나누려고 하는 조의 개수 k
+	cin >> n >> k;
+	vector<int> height; // 원생들의 키를 저장할 벡터
+	for (int i = 0; i < n; i++) {
+		int h; // 각 원생들의 키
+		cin >> h;
+		height.push_back(h);
+	}
+	priority_queue<int> dif; // 인접한 모든 원생들의 키차이를 저장(priority_queue : 기본적으로 내림차순 정렬)
+	for (int i = 0; i < n-1; i++) {
+		int d;
+		d=height[i + 1] - height[i];
+		dif.push(d);
+	}
+
+	// 원생들의 인접한 키 차이중 가장 큰 차이 k-1개를 버려서 그룹으로 묶이는 것을 방지한다.
+	for (int i = 0; i < k - 1; i++) {
+		dif.pop();
+	}
+
+	// 나머지 키차이는 하나의 그룹으로 묶이게 되므로 더해준다.
+	// 그룹내 마지막 원생의 키 - 그룹내 첫번쨰 원생의 키 = 그룹내 인접한 모든 원생의 키차이의 합
+	int answer = 0;
+	while (!dif.empty()) {
+		answer += dif.top();
+		dif.pop();
+	}
+	cout << answer << endl;
+}
