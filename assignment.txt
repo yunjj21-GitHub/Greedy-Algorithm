@@ -1,0 +1,43 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+bool cmp(pair<int, int>x, pair<int, int>y) {
+	return x.first > y.first;
+}
+
+int main() {
+	int n; // 과제의 갯수
+	cin >> n;
+	vector<pair<int, int>> assignment; // 각 과제의 데드라인과 할당된 점수를 저장
+	for (int i = 0; i < n; i++) {
+		int d, w; // 각 과제의 데드라인과 할당된 점수
+		cin >> d >> w;
+		assignment.push_back(make_pair(d, w));
+	}
+
+	sort(assignment.begin(), assignment.end(), cmp); // 데드라인을 기준으로 내림차순 정렬
+
+	// 캘린더의 가장 뒤 부터 스케줄링 할것임
+	int day = assignment.front().first;
+
+	int maxSum = 0;
+	while (day != 0) {
+		// day까지 가능한 과제중 점수가 가장 높은것을 선택
+		int maxW = 0;
+		int j;
+		for (int i = 0; i != assignment.size() && assignment[i].first >= day; i++) {
+			if (assignment[i].second > maxW) {
+				maxW = assignment[i].second;
+				j = i;
+			};
+		}
+		day--;
+
+		if (maxW == 0) continue; // day까지 가능한 과제가 없다면
+		maxSum += maxW;
+		assignment.erase(assignment.begin() + j);
+	}
+	cout << maxSum << endl; // 결과값 출력
+}
