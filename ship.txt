@@ -1,0 +1,58 @@
+// 백준 1092 : 배
+#include <iostream>
+#include <algorithm>
+#include <vector>
+using namespace std;
+
+bool cmp(int x, int y) {
+	return x > y;
+}
+
+int main() {
+	int n; // 크레인의 개수
+	cin >> n; 
+	vector<int> cranes; // 각 크레인의 무게제한을 저장
+	for (int i = 0; i < n; i++) {
+		int wL;
+		cin >> wL;
+		cranes.push_back(wL);
+	}
+	sort(cranes.begin(), cranes.end(), cmp); // 크레인의 무게제한을 기준으로 내림차순 정렬
+
+	int m; // 박스의 개수
+	cin >> m;
+	vector<int> boxes; // 각 박스의 무게를 저장
+	for (int i = 0; i < m; i++) {
+		int weight;
+		cin >> weight;
+		boxes.push_back(weight);
+	}
+	sort(boxes.begin(), boxes.end(), cmp); // 박스의 무게를 기준으로 내림차순 정렬
+
+	if (boxes.front() > cranes.front()) { // 가장 무거운 박스의 무게 > 가장 큰 크레인의 무게제한
+		cout << -1 << endl;
+		return 0;
+	}
+
+	int time = 0; // 모든 박스를 배로 옮기는데 드는 시간
+	int craneEnd = cranes.size(); // 박스를 옮기는 crane의 범위를 지정
+
+	while (!boxes.empty()) { // 더이상 옮길 박스가 없을 때까지 반복
+		// 가장 무거운 박스를 옮길수 있는 크레인부터 옮길수 있는 박스를 배차함
+		for (int i = 0; i < craneEnd; i++) {
+			for (int j = 0; j < boxes.size(); j++) {
+				if (boxes[j] <= cranes[i]) {
+					boxes.erase(boxes.begin() + j); // 배차된 박스는 박스벡터에서 지운다.
+					break;
+				}
+
+				// 검사중인 크레인이 옮길수 있는 박스가 없다면, 그 뒤 크레인도 옮길수 있는 박스가 없다.
+				if (j == boxes.size() - 1) {
+					craneEnd = i;
+				}
+			}
+		}
+		time++; // 1분 소요
+	}
+	cout << time << endl; // 정답 출력
+}
