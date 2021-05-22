@@ -1,0 +1,33 @@
+// 백준 6068 : 시간 관리하기
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+bool cmp(pair<int, int>x, pair<int, int>y) {
+	return x.second > y.second;
+}
+
+int main() {
+	int n; // 농부 존이 해야할 일
+	cin >> n;
+	vector<pair<int, int>> list; // 존이 해야할 일의 정보를 저장
+	for (int i = 0; i < n; i++) {
+		int t, s; // 완성 될 때 까지 걸리는 시간 t, 끝내야 하는 시각 s
+		cin >> t >> s;
+		list.push_back({ t, s });
+	}
+	sort(list.begin(), list.end(), cmp); // 끝내야 하는 시각(s)를 기준으로 내림차순 정렬
+
+	int max = list[0].second - list[0].first; // 존이 가장 늦게 일어나도 되는 시각
+	for (int i = 1; i < n; i++) {
+		if (max >= list[i].second) { // 이전 일정과 맞물리지 않는 경우
+			max = list[i].second - list[i].first;
+		}
+		else { // 이전 일정과 맞물리는 경우
+			max -= list[i].first;
+		}
+	}
+	if (max < 0) cout << -1 << endl; // 존이 제시간에 일을 끝낼 수 없다면
+	else cout << max << endl; // 제시간에 일을 끝낼 수 있다면
+}
