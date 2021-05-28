@@ -1,0 +1,30 @@
+// 백준 2205 : 저울 추 만들기
+#include <iostream>
+
+int main() {
+	int n;
+	std::cin >> n;
+
+	int *answer = new int[n + 1];
+	int x = n;
+	while (x != 0) {
+		int powerOfTwo = 2;
+		while (x * 2 >= powerOfTwo) {
+			powerOfTwo *= 2;
+		}
+		powerOfTwo /= 2;
+
+		int y = powerOfTwo - x;
+		int tmp = y;
+		int i = x;
+		while (tmp <= x) {
+			answer[i--] = tmp++;
+		}
+
+		x = y - 1;
+	}
+
+	for (int i = 1; i < n + 1; i++) {
+		std::cout << answer[i] << '\n';
+	}
+}
