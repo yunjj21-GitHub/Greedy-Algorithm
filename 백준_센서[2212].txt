@@ -1,0 +1,31 @@
+// 백준 2212 : 센서
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int main() {
+	int n; // 센서의 개수 n
+	cin >> n;
+	int k; // 집중국의 개수 k
+	cin >> k;
+	int *sensor = new int[n]; // 센서의 위치를 기억할 배열 sensor
+	for (int i = 0; i < n; i++) {
+		cin >> sensor[i];
+	}
+
+	sort(sensor, sensor + n); // 센서의 위치를 기준으로 오름차순 정렬
+
+	int *d = new int[n - 1]; // 센서사이의 거리를 저장할 배열 d
+	for (int i = 0; i < n-1; i++) {
+		d[i] = sensor[i + 1] - sensor[i];
+	}
+	sort(d, d + (n - 1)); // 센서사이의 거리를 기준으로 오름차순 정렬
+
+	// 센서사이가 가장 먼 거리 k-1개를 제외하고 모두 더해준다.
+	int answer = 0;
+	for (int i = 0; i < n - k; i++) {
+		answer += d[i];
+	}
+
+	cout << answer << endl;
+}
