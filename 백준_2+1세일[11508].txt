@@ -1,0 +1,28 @@
+// 백준 11508 : 2+1 세일
+#include <iostream>
+#include <queue>
+using namespace std;
+
+int main() {
+	int n; // 유제품의 수
+	cin >> n;
+	priority_queue<int> cost; // 유제품의 가격(priority_queue : 기본적으로 내림차순 정렬)
+	for (int i = 0; i < n; i++) {
+		int c;
+		cin >> c;
+		cost.push(c);
+	}
+
+	// 유제품의 가격을 기준으로 내림차순 정렬한 후 3의 배수인 상품을 덤으로 가져갈것임
+	int minSumCost = 0; // 재현이가 지불하게 되는 최소비용 
+	for (int i = 1; !cost.empty(); i++) {
+		if (i % 3 == 0) { // 2+1의 세일상품
+			cost.pop();
+			continue;
+		}
+		// 그것을 제외한 모든 상품
+		minSumCost += cost.top();
+		cost.pop();
+	}
+	cout << minSumCost << endl; // 결과값
+}
