@@ -1,0 +1,46 @@
+// 백준 2262 : 토너먼트 만들기
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int main() {
+	int n; // 게임에 참가하는 사람의 수 n
+	cin >> n;
+	int *par = new int[n]; // 참가자의 랭킹을 저장할 배열 par
+	for (int i = 0; i < n; i++) {
+		cin >> par[i];
+	}
+
+	int answer = 0; // 출력될 답안
+
+	while (n != 1) { // 최후의 한명이 남을때까지 반복
+		// 랭킹이 가장 낮은 사람을 찾아 인접한 사람중 랭킹 차이가 더 적은 사람과 대회를 치르도록 한다.
+		int btm = 0;
+		int index;
+		for (int i = 0; i < n; i++) { // 랭킹이 가장 낮은 사람을 찾는다.
+			if (btm < par[i]) {
+				btm = par[i];
+				index = i;
+			}
+		}
+
+		// 인접한 사람 중 랭킹차이가 더 작은 사람과 대회를 치르도록 한다.
+		if (index == (n - 1)) {
+			answer += par[index] - par[index - 1];
+		}
+		else if(index == 0){
+			answer += par[index] - par[index + 1];
+		}
+		else {
+			answer += par[index] - max(par[index - 1], par[index + 1]);
+		}
+
+		// 랭킹이 가장 낮아 탈락했을테니, 참가자 목록에서 제거해준다.
+		for (int i = index; i < n; i++) {
+			par[i] = par[i + 1];
+		}
+		n--; // 게임에 참가하는 사람의 수를 하나 줄여준다.
+	}
+	
+	cout << answer << endl;
+}
