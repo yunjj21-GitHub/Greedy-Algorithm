@@ -1,0 +1,27 @@
+// 백준 2812 : 크게 만들기
+#include <iostream>
+#include <string>
+#include <deque>
+using namespace std;
+
+int main() {
+	int n, k; // 숫자의 자릿수 n. 지울 숫자의 갯수 k
+	cin >> n >> k;
+	string number; // 입력되는 숫자 number
+	cin >> number;
+
+	deque<char> dq;
+	for (int i = 0; i < number.size(); i++) {
+
+		while (k != 0 && !dq.empty() && dq.back() < number[i]) {
+			dq.pop_back();
+			k--;
+		}
+		dq.push_back(number[i]);
+	}
+
+	for (int i = 0; i < dq.size() - k; i++) { 
+		cout << dq[i];
+	}
+	cout << "\n";
+}
