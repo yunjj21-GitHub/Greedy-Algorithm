@@ -1,0 +1,25 @@
+// 백준 3088 : 화분 부수기
+#include <iostream>
+
+int main() {
+	int n; // 화분의 개수
+	std::cin >> n;
+	bool num[1000001] = { false }; // 화분에 적힌 숫자의 등장 여부를 저장
+	int crash = 0; // 직접 깨는 횟수(출력 답안)
+	for (int i = 0; i < n; i++) { // 맨 왼쪽 화분부터 적혀진 숫자를 받아온다.
+		int a, b, c;
+		std::cin >> a >> b >> c;
+
+		// 화분에 적힌 숫자중 하나라도 이전(왼쪽)에 등장한 적이 없다면 직접 깨야 한다.
+		if (!num[a] && !num[b] && !num[c]) {
+			crash++; // 직접 깬다.
+		}
+
+		// 모든 숫자가 등장 했음을 체크한다.
+		num[a] = true;
+		num[b] = true;
+		num[c] = true;
+	}
+
+	std::cout << crash << '\n';
+}
