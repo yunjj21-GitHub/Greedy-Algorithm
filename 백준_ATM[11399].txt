@@ -1,0 +1,39 @@
+// 백준 11399 : ATM
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+	int n, total = 0; // ATM을 이용하는 사람의 수 n, 모든 사람이 ATM을 이용한 시간의 합 total
+	cin >> n;
+	int *p = new int[n]; // 각 사람들이 ATM기를 이용하는 시간을 저장할 배열
+	for (int i = 0; i < n; i++) {
+		cin >> p[i];
+	}
+
+	// 정렬
+	int temp;
+	for (int k = 1; k <= n - 1; k++) {
+		for (int i = 0; i < n - k; i++) {
+			if (p[i] > p[i + 1]) {
+				temp = p[i];
+				p[i] = p[i + 1];
+				p[i + 1] = temp;
+			}
+		}
+	}
+
+	/* 제대로 정렬 되었는지 확인 (작은수 -> 큰수)
+	for (int i = 0; i < n; i++) {
+		cout << p[i] << ' ';
+	}
+	cout << endl;*/
+
+	// 최소 시간 계산
+	for (int i = 0; i < n; i++) {
+		for (int k = 0; k <= i; k++) {
+			total += p[k];
+		}
+	}
+	cout << total << endl;
+}
