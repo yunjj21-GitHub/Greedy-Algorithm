@@ -1,0 +1,20 @@
+// 백준 5585 : 거스름돈
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+	int price, change; // price는 물건의 값, change는 타로가 받을 거스름돈의 총액
+	int money[6] = { 500, 100, 50, 10, 5, 1 };
+	int counter = 0; // 거스름돈의 개수
+	cin >> price;
+	change = 1000 - price;
+	for (int i = 0; i < 6; i++) {
+		while (change >= money[i]) {
+			change -= money[i];
+			counter++;
+			if (change < money[i]) break;
+		}
+	}
+	cout << counter << endl;
+}
