@@ -1,0 +1,36 @@
+// 백준 1541 : 잃어버린 괄호
+#define _CRT_SECURE_NO_WARNINGS
+#include <iostream>
+#include <string>
+#include <string.h>
+using namespace std;
+
+int main() { // 최초의 - 전까지는 더해주고 - 이후는 빼준다.
+	char input[100];
+	cin.getline(input, 100, '\n');
+	int result = 0;
+
+	char *minus[100];
+	minus[0] = strtok(input, "-");
+	int size; // minus배열의 사이즈를 저장
+	for (size = 1; minus[size -1] != NULL; size++) {
+		minus[size] = strtok(NULL, "-");
+	}
+	
+	// 최조의 - 이전
+	char* num = strtok(minus[0], "+");
+	while (num != NULL) {
+		result += atoi(num);
+		num = strtok(NULL, "+");
+	}
+
+	// 최초의 - 이후
+	for (int i = 1; i < size; i++) {
+		num = strtok(minus[i], "+");
+		while (num != NULL) {
+			result -= atoi(num);
+			num = strtok(NULL, "+");
+		}
+	}
+	cout << result << endl;
+}
