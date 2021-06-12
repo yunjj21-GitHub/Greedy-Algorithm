@@ -1,0 +1,16 @@
+// 백준 2875 : 대회or인턴
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() { 
+	int n, m, k; // 여학색의 수 n, 남학생의 수 m, 인턴쉽에 참여해야하는 인원 k
+	cin >> n >> m >> k;
+	int max = n / 2 > m -k ? m - k : n / 2; // i가 0인 경우를 미리 계산함
+	int temp;
+	for (int i = 1; i <= k; i++) {
+		temp = (n - i) / 2 > m - (k - i) ? m - (k - i) : (n - i) / 2;
+		if (temp > max) max = temp;
+	}
+	cout << max << endl;
+}
