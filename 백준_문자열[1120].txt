@@ -1,0 +1,37 @@
+// 백준 1120 : 문자열
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+	string a, b;
+	cin >> a >> b;
+	//cout << a << endl;
+	//cout << b << endl;
+
+	int gap = b.size() - a.size(); // 두 문자열의 길이 차이(a 문자열에 추가해야하는 문자 개수)가 5라 가정
+	int min = 50;
+	int other;
+
+	for (int i = 0; i < gap + 1; i++) { // i=0, 1, 2, 3, 4, 5
+		string tmp;
+		other = 0;
+		// a 앞
+		tmp += b.substr(0, i);
+		//cout << "앞 : " << b.substr(0, i) << endl;
+
+		// a
+		tmp += a;
+
+		// a 뒤
+		tmp += b.substr(b.size()-(gap-i), gap - i); // a 문자열에 총 추가해야 하는 문자의 개수 gap 에서 앞에 추가한 문자의 개수 i를 뺌
+		//cout << "뒤 : " << b.substr(b.size() - (gap - i), gap - i) << endl; // gap - i => 5, 4, 3, 2, 1, 0
+
+		//cout << tmp << endl;
+		for (int i = 0; i < b.size(); i++) {
+			if (tmp[i] != b[i]) other++;
+		}
+		if (min > other) min = other;
+	}
+	cout << min << endl;
+}
