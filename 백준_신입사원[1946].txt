@@ -1,0 +1,37 @@
+// 백준 1946 : 신입사원
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+// 바로 직전에 채용된 사람의 면접 순위보다 높은 사람을 찾아 채용
+int main() {
+	int t, n, test[20]; // 테스트 케이스의 개수 t, 각 테스트의 지원자의 수 n
+	cin >> t;
+	int x, y; // 서류심사 점수, 면접심사 점수를 저장
+	int index = t-1; // 그냥 나중에 합격자수 출력할려고 생성
+	while (t--) { // t = 1, 0
+		int count = 1; // 서류심사 성적 1등은 무조건 합격
+		vector<pair<int, int>> v;
+		cin >> n;
+		for (int i = 0; i < n; i++) {
+			cin >> x >> y; // 서류심사 성적과 면접 심사 성적을 받아옴
+			v.push_back(make_pair(x, y));
+		}
+		sort(v.begin(), v.end()); // 서류심사 성적 기준으로 오름차순 정렬
+
+		int pivot = v[0].second;
+		for (int i = 0; i < n; i++) {
+			if (v[i].second < pivot) {
+				pivot = v[i].second;
+				count++;
+			}
+		}
+		test[t] = count;
+	}
+	// 각 테스트 당 합격자 수 출력
+	for (int i = index; i >= 0; i--) {
+		cout << test[i] << endl;
+	}
+}
