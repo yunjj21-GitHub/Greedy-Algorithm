@@ -1,0 +1,30 @@
+// 백준 1049 : 기타줄
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <cmath>
+using namespace std;
+
+int main() {
+	int n, m; // 필요한 기타줄의 개수 n, 기타줄 브랜드의 개수 m
+	cin >> n >> m;;
+	int pack[50], single[50]; // 패키지의 가격 pack, 낱개의 가격 single
+	int min;
+
+	for (int i = 0; i < m; i++) {
+		cin >> pack[i] >> single[i];
+	}
+	sort(pack, pack + m);
+	sort(single, single + m);
+
+	// 세트로만 구매하는 경우
+	min = pack[0] * (int)ceil(n / 6.0);
+
+	// 세트 + 낱개로 구매하는 경우
+	min = pack[0] * (n / 6) + single[0] * (n % 6) > min ? min : pack[0] * (n / 6) + single[0] * (n % 6);
+
+	// 낱개만 구매하는 경우
+	min = single[0] * n > min ? min : single[0] * n;
+
+	cout << min << endl;
+}
