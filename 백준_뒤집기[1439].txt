@@ -1,0 +1,30 @@
+// 백준 1439 : 뒤집기
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+	char s[1000000];
+	cin >> s;
+	int counter[2] = { 0, };
+
+	int i = 0;
+	while (1) {
+		if (s[i] == '0' && s[i + 1] == '\0') {
+			counter[0]++;
+			break;
+		}
+		else if (s[i] == '1' && s[i + 1] == '\0') {
+			counter[1]++;
+			break;
+		}
+
+		if (s[i] == '0' && s[i + 1] == '1') counter[0]++; // 1기준으로 0을 뒤집음
+		else if (s[i] == '1' && s[i + 1] == '0') counter[1]++; // 0을 기준으로 1을 뒤집음
+
+		i++;
+	}
+
+	int min = counter[0] > counter[1] ? counter[1] : counter[0];
+	cout << min << endl;
+}
