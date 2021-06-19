@@ -1,0 +1,33 @@
+// 백준 2828 : 사과 담기 게임
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Basket {
+public:
+	int head;
+	int tail;
+	Basket(int size) { head = size; tail = 1; }
+};
+
+int main() {
+	int n, m, j; // 스크린의 크기n, 바구니의 크기m, 사과의 개수j
+	int x, counter =0; // 사과가 떨어지는 위치x, 바구니 이동 거리의 최솟값counter
+	cin >> n >> m >> j;
+	Basket basket(m);
+
+	for (int i = 0; i < j; i++) {
+		cin >> x;
+		while (basket.head < x) {
+			basket.head++;
+			basket.tail++;
+			counter++;
+		}
+		while (basket.tail > x){
+			basket.tail--;
+			basket.head--;
+			counter++;
+		}
+	}
+	cout << counter << endl;
+}
