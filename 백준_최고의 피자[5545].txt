@@ -1,0 +1,31 @@
+// 백준 5545 : 최고의 피자
+#include <iostream>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+bool compare(int a, int b){
+	return a > b;
+}
+
+int main() {
+	int n; // 토핑의 종류의 수
+	int a, b; // 도우의 가격 a, 토핑의 가격 b
+	int c; // 도우의 열량
+
+	cin >> n >> a >> b >> c;
+	int *toping = new int[n]; // 토핑의 열량을 저장
+	for (int i = 0; i < n; i++) {
+		cin >> toping[i];
+	}
+	sort(toping, toping + n, compare); // 내림차순정렬
+
+	double maxKcal = c / a; // 토핑을 선택하지 않았을 경우
+	for (int i = 1; i <= n; i++) {
+		a += b; // 총 가격
+		c += toping[i-1]; // 총 열량
+		if (maxKcal < c / a) maxKcal = c / a;
+	}
+
+	cout << maxKcal << endl;
+}
