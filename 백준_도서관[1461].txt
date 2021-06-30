@@ -1,0 +1,58 @@
+// 백준 1461 : 도서관
+#include <iostream>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+bool compare(double a, double b){
+	return a > b;
+}
+
+int main() {
+	int n, m; // 책의 개수 n, 들 수 있는 책의 개수 m
+	int x; // 책의 좌표
+	cin >> n >> m;
+	int *pos = new int[n]; // 양수인 책의 좌표를 저장
+	int *nag = new int[n]; // 음수인 책의 좌표를 저장
+	int posIndex = -1, nagIndex = -1;
+	for (int i = 0; i < n; i++) {
+		cin >> x;
+		x > 0 ? pos[++posIndex] = x : nag[++nagIndex] = abs(x);
+	}
+	sort(pos, pos + posIndex + 1, compare);
+	sort(nag, nag + nagIndex + 1, compare);
+
+	int min = 0;
+	if (pos[0] >= nag[0]) {
+		int i = 0;
+		min += pos[i];
+		i += m;
+		while (i <= posIndex) {
+			min += (pos[i] * 2);
+			i += m;
+		}
+
+		int k = 0;
+		while (k <= nagIndex) {
+			min += (nag[k] * 2);
+			k += m;
+		}
+	}
+	else {
+		int i = 0;
+		min += nag[i];
+		i += m;
+		while (i <= nagIndex) {
+			min += (nag[i] * 2);
+			i += m;
+		}
+
+		int k = 0;
+		while (k <= posIndex) {
+			min += (pos[k] * 2);
+			k += m;
+		}
+	}
+
+	cout << min << endl;
+}
