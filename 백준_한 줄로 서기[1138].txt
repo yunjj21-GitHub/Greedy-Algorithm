@@ -1,0 +1,24 @@
+// 백준 1138 : 한 줄로 서기
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+int main() {
+	int n; // 사람의 수
+	cin >> n;
+	int *m = new int[n]; // 각 사람 마다 자신보다 큰 사람이 왼쪽에 몇명 있었는지를 저장
+	for (int i = 0; i < n; i++) {
+		cin >> m[i];
+	}
+
+	vector<int> line; // 오민식의 지시대로 선 줄
+	for (int i = (n - 1); i >= 0; i--) { // 거꾸로 꺼낸다.
+		line.insert(line.begin()+ m[i], i+1);
+	}
+
+	for (int i = 0; i < n; i++) {
+		cout << line[i] << ' ';
+	}
+	cout << endl;
+}
