@@ -1,0 +1,31 @@
+// 백준 2200 : 계산기
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+	int n; // 다항식의 차수
+	cin >> n;
+	n++; // 최고차항의 계수 ~ 상수
+	int *coef = new int[n]; // 계수를 저장하는 배열
+	int counter = 1; // '='를 누른 횟수 포함
+	for (int i = 0; i < n; i++) {
+		cin >> coef[i];
+	}
+
+	counter--; // i = 1일때, 'x'만 필요('*'는 필요없다.)하기 때문에 미리 빼준다.
+	for (int i = 1; i < n; i++) {
+		counter+=2; // 'x'와 '*' (계수!=0인 경우와 계수==0인 경우 둘다 필요)
+
+		// 계수 != 0인 경우
+		if (coef[i] != 0) {
+			counter += 2; // '+'와 계수가 1의 자리인 경우
+			while (coef[i] /= 10)
+			{
+				counter++;
+			}
+		}
+		// 계수 == 0인 경우 (다른 연산을 필요로 하지 않는다)
+	}
+	cout << counter << endl;
+}
