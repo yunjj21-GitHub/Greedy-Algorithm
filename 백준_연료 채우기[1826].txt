@@ -1,0 +1,48 @@
+// 백준 1826 : 연료 채우기
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <queue>
+using namespace std;
+
+bool cmp(pair<int, int>x, pair<int, int>y) {
+	return x.first < y.first;
+}
+
+int main() {
+	int n; // 주유소의 개수
+	cin >> n;
+	vector<pair<int, int>> gasStation; // 주유소의 정보를 저장
+	int a, b; // 시작 위치에서 주유소 까지의 거리 a, 주유소에서 채울 수 있는 연료의 양 b
+	for (int i = 0; i < n; i++) {
+		cin >> a >> b;
+		gasStation.push_back(make_pair(a, b));
+	}
+	sort(gasStation.begin(), gasStation.end(), cmp); // a를 기준으로 내림차순 정렬
+
+	int l, p; // 마을 까지의 거리 l, 트럭에 원래 있는 연료의 양 p
+	cin >> l >> p;
+	
+	int min = 0; // 주유소에서 멈추는 최소 횟수
+	int i = 0;
+	priority_queue<int> pq;
+	while (p < l) {
+
+		while (i < n && gasStation[i].first <= p) {
+			pq.push(gasStation[i].second);
+			i++;
+		}
+
+		if (pq.empty()) {
+			// 아직 가야할 거리도 남았고, 갈 수 있는 주유소도 탈탈 털었는데 갈 수 있는 곳이 없을 때
+			min = -1;
+			break;
+		}
+		
+		p += pq.top();
+		pq.pop();
+		min++;
+	}
+	cout << min << endl;
+}
