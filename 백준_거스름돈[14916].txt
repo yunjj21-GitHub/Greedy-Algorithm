@@ -1,0 +1,22 @@
+// 백준 14916 : 거스름돈
+#include <vector>
+#include <string>
+#include <iostream>
+
+using namespace std;
+
+int main() {
+	int n;
+	cin >> n;
+
+	int cnt = n / 5; 
+	int rest = n % 5; 
+
+	while (cnt > 0 && rest % 2 != 0) {
+		cnt--; 
+		rest += 5;
+	}
+
+	if (rest % 2 == 0) cout << cnt + rest / 2 << endl;
+	else cout << -1 << endl;
+}
