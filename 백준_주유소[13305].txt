@@ -1,0 +1,35 @@
+// 백준 13305 : 주유소
+#include <vector>
+#include <string>
+#include <iostream>
+
+using namespace std;
+
+int main() {
+	int n; // 도시의 개수
+	cin >> n;
+
+	vector<long long> l(n); // 각 도시와 도시 사이의 거리
+	vector<long long> price(n); // 각 도시 주유소의 리터당 가격
+	for (int i = 0; i < n-1; i++) {
+		cin >> l[i];
+	}
+	for (int i = 0; i < n; i++) {
+		cin >> price[i];
+	}
+
+	long long answer = 0;
+
+	int cur = 0;
+	for (int i = cur+1; i < n; i++) {
+		if (price[cur] > price[i] || i == n-1) {
+			int next = i;
+			for (int j = cur; j < next; j++) {
+				answer += (price[cur] * l[j]);
+			}
+			cur = next;
+		}
+	}
+
+	cout << answer << '\n';
+}
