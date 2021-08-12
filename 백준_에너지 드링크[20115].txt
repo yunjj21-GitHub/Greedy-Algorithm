@@ -1,0 +1,23 @@
+// 백준 20115 : 에너지 드링크
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <iostream>
+
+using namespace std;
+
+int main() {
+	int n;
+	cin >> n;
+	vector<double> drink(n);
+	for (int i = 0; i < n; i++) {
+		cin >> drink[i];
+	}
+	sort(drink.begin(), drink.end()); // 오름차순 정렬
+
+	double ans = drink[n-1];
+	for (int i = 0; i < n - 1; i++) {
+		ans += (drink[i] / 2);
+	}
+	cout << ans << '\n';
+}
