@@ -1,0 +1,46 @@
+// 백준 1931 : 회의실 배정
+#include <vector>
+#include <string>
+#include <algorithm>
+#include <iostream>
+
+using namespace std;
+
+bool cmp(pair<int, int>x, pair<int, int>y) {
+	if (x.second == y.second) {
+		return x.first < y.first;
+	}
+	else {
+		return x.second < y.second;
+	}
+}
+
+int main() {
+	int ans = 0; // 회의의 최대 개수 (답안)
+	int N; // 회의의 개수
+	vector<pair<int, int>> list;
+
+	cin >> N;
+	for (int i = 0; i < N; i++) {
+		int start, end;
+		cin >> start >> end;
+		list.push_back({ start, end });
+	}
+
+	// end가 빠른순, 동일하다면 start가 빠른순 정렬
+	sort(list.begin(), list.end(), cmp);
+
+	int cur = 0; // 현재 시각을 저장
+	int idx = 0;
+	while (idx < N) {
+		for (int i = idx; i < N; i++) {
+			idx++;
+			if (list[i].first >= cur) {
+				cur = list[i].second; // cur갱신
+				ans++;
+				break;
+			}
+		}
+	}
+	cout << ans << '\n';
+}
