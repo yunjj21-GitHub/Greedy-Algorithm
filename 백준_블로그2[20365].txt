@@ -1,0 +1,31 @@
+// 백준 20365 : 블로그2
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+int main() {
+	int N;
+	cin >> N;
+	string T;
+	cin >> T;
+
+	int ans = 500000;
+	char flag[2] = { 'R', 'B' };
+	for (int i = 0; i < 2; i++) {
+		int cnt = 1;
+		for (int j = 0; j < T.size(); j++) {
+			if (T[j] == flag[i]) {
+				cnt++;
+				while (T[j] == flag[i]) {
+					j++;
+				}
+				j--;
+			}
+		}
+
+		if (cnt < ans) ans = cnt;
+	}
+	cout << ans << '\n';
+}
