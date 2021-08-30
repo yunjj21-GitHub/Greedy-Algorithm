@@ -1,0 +1,35 @@
+// 백준 16953 : A -> B
+#include <vector>
+#include <string>
+#include <iostream>
+
+using namespace std;
+
+int main() {
+	int A, B;
+	cin >> A >> B;
+
+	int cnt = 0; //연산횟수
+	while (B >= A) {
+		if (A == B) {
+			cout << cnt + 1 << '\n';
+			return 0;
+		}
+
+		if (B % 10 == 1) { // B의 끝자리가 1인지 확인
+			B = (B - 1) / 10;
+		}
+		else if(B % 2 == 0){ // B가 2로 나누어 떨어지는지 확인
+			B /= 2;
+		}
+		else { // 두 연산을 모두 할 수 없다면
+			cout << -1 << '\n';
+			return 0;
+		}
+
+		cnt++;
+	}
+
+	cout << -1 << '\n';
+	return 0;
+}
