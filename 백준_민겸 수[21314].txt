@@ -1,0 +1,83 @@
+// 백준 21314 : 민겸 수
+#include <vector>
+#include <string>
+#include <iostream>
+
+using namespace std;
+
+string make_max(string s) {
+	string result = "";
+
+	int idx = 0;
+	while (idx < s.size()) {
+		if (s[idx] == 'M') {
+			int end_idx = idx;
+			while (end_idx < s.size()) {
+				if (s[end_idx] == 'M') end_idx++;
+				else break;
+			}
+
+			// 십진수로 변환
+			if (end_idx == s.size()) {
+				for (int len = 0; len < end_idx - idx; len++) {
+					result += "1";
+				}
+			}
+			else {
+				result += "5";
+				for (int len = 0; len < end_idx - idx; len++) {
+					result += "0";
+				}
+			}
+
+			// idx 갱신
+			idx = end_idx + 1;
+		}
+		else {
+			result += "5";
+			idx++;
+		}
+	}
+
+	return result;
+}
+
+string make_min(string s) {
+	string result = "";
+
+	int idx = 0;
+	while (idx < s.size()) {
+		if (s[idx] == 'M') {
+			int end_idx = idx;
+			while (end_idx < s.size()) {
+				if (s[end_idx] == 'M') end_idx++;
+				else break;
+			}
+
+			// 십진수로 변환
+			result += "1";
+			end_idx--;
+
+			for (int len = 0; len < end_idx - idx; len++) {
+				result += "0";
+			}
+
+			// idx 갱신
+			idx = end_idx + 1;
+		}
+		else {
+			result += "5";
+			idx++;
+		}
+	}
+
+	return result;
+}
+
+int main() {
+	string s;
+	cin >> s;
+
+	cout << make_max(s) << '\n';
+	cout << make_min(s) << '\n';
+}
