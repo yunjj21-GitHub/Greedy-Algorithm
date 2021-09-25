@@ -1,0 +1,35 @@
+// 백준 2141 : 우체국
+#include <vector>
+#include <string>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+int N; // 마을의 개수
+vector<pair<int, int>> village; // 각 마을에 대한 정보를 저장
+long long total = 0; // 나라 전체 인구수를 저장
+
+int main() {
+	cin >> N;
+	for (int i = 0; i < N; i++) {
+		int X, A; // 마을의 위치 X, 마을의 인구 수 A
+		cin >> X >> A;
+		village.push_back({ X, A });
+		
+		total += A;
+	}
+
+	// 마을 위치를 기준으로 오름차순 정렬
+	sort(village.begin(), village.end());
+
+	long long sum = 0;
+	for (auto v : village) {
+		sum += v.second;
+
+		if (sum >= (total + 1) / 2) { // 과반수 처리 : (total + 1) / 2
+			cout << v.first << '\n';
+			break;
+		}
+	}
+}
